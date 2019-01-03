@@ -3,8 +3,7 @@ title: "Data cleaning"
 author: "Jenny"
 date: "3 בינואר 2019"
 output:
-  html_document:
-  keep_md: TRUE
+  github_document
 ---
 
 ```{r setup, include=FALSE}

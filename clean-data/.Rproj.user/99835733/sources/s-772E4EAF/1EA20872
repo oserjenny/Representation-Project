@@ -5,14 +5,14 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "1635675694",
     "id" : "1EA20872",
-    "lastKnownWriteTime" : 1546545479,
-    "last_content_update" : 1546545479422,
+    "lastKnownWriteTime" : 1546545836,
+    "last_content_update" : 1546545836552,
     "path" : "~/GitHub/Representation-Project/clean-data/README.Rmd",
     "project_path" : "README.Rmd",
     "properties" : {
-        "cursorPosition" : "5,16",
+        "cursorPosition" : "6,3",
         "last_setup_crc32" : "",
         "scrollLine" : "0",
         "tempName" : "Untitled1"
