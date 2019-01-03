@@ -1,0 +1,30 @@
+---
+title: "Data cleaning"
+author: "Jenny"
+date: "3 בינואר 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+```
+
+## Introduction
+
+This file documents the data cleaning for the Representation Project
+
+## Data cleaning
+
+Read in the data.
+
+```{r}
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+```
+
+Take a look at the data
+
+```{r} 
+head(tbl)
+```
