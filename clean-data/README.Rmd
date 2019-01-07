@@ -12,6 +12,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 
 library(readr)
+library(tidyverse)
 ```
 
 ## Introduction
@@ -30,4 +31,16 @@ Take a look at the data
 
 ```{r} 
 head(tbl)
+```
+
+Display frequencies of participation variable over time
+
+```{r} 
+tbl %>% group_by (year) %>% count (voted_sen) 
+```
+
+Display full table frequencies
+
+```{r} 
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
 ```

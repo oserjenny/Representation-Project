@@ -3,13 +3,11 @@ Data cleaning
 Jenny
 3 בינואר 2019
 
-Introduction
-------------
+## Introduction
 
 This file documents the data cleaning for the Representation Project
 
-Data cleaning
--------------
+## Data cleaning
 
 Read in the data.
 
@@ -25,7 +23,7 @@ head(tbl)
 
     ## # A tibble: 6 x 70
     ##    year case_id weight weight_cumulati~ state st    cd     dist dist_up
-    ##   <int>   <int>  <dbl>            <dbl> <chr> <chr> <chr> <int>   <int>
+    ##   <int>   <int>  <dbl>            <dbl> <chr> <chr> <S3:> <int>   <int>
     ## 1  2006  439219  1.85             1.35  Nort~ NC    NC-10    10      10
     ## 2  2006  439224  0.968            0.704 Ohio  OH    OH-3      3       3
     ## 3  2006  439228  1.59             1.16  New ~ NJ    NJ-1      1       1
@@ -51,3 +49,31 @@ head(tbl)
     ## #   voted_gov_chosen <chr>, voted_gov_fec <chr>, rep_current <chr>,
     ## #   rep_icpsr <int>, sen1_current <chr>, sen1_icpsr <int>,
     ## #   sen2_current <chr>, sen2_icpsr <int>, gov_current <chr>, gov_fec <chr>
+
+Display frequencies of participation variable over time
+
+``` r
+tbl %>% group_by (year) %>% count (voted_sen) 
+```
+
+    ## # A tibble: 44 x 3
+    ## # Groups:   year [12]
+    ##     year voted_sen                       n
+    ##    <int> <fct>                       <int>
+    ##  1  2006 [Democrat / Candidate 1]    10715
+    ##  2  2006 [Republican / Candidate 2]   8407
+    ##  3  2006 [Other / Candidate 3]         153
+    ##  4  2006 Not Sure                      292
+    ##  5  2006 I Did Not Vote In This Race  2467
+    ##  6  2006 <NA>                        14387
+    ##  7  2007 <NA>                         9999
+    ##  8  2008 [Democrat / Candidate 1]     5484
+    ##  9  2008 [Republican / Candidate 2]   5918
+    ## 10  2008 [Other / Candidate 3]         184
+    ## # ... with 34 more rows
+
+Display full table frequencies
+
+``` r
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
+```
