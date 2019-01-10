@@ -1,7 +1,7 @@
 ---
 title: "Data cleaning"
 author: "Jenny"
-date: "3 בינואר 2019"
+date: "January 2019"
 output:
   github_document
 editor_options: 
@@ -54,6 +54,7 @@ tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
 Recode of vv_turnout_gvm to dichotomous
 
 ```{r} 
-XXX
+tbl <- tbl %>%
+  mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
 ```
 
