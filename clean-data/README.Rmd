@@ -58,3 +58,16 @@ tbl <- tbl %>%
   mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
 ```
 
+Plot turnout dichotomous by year
+
+```{r} 
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+
+```
+
+...Didn't work - began drafting revised code:
+
+```{r} 
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary)) geom_bar
+
+```
