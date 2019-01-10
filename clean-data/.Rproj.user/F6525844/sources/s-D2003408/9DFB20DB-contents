@@ -44,3 +44,16 @@ Display full table frequencies
 ```{r} 
 tbl %>% group_by (year) %>% count (voted_sen) %>% View
 ```
+
+Validated turnout General Election 
+
+```{r} 
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
+```
+
+Recode of vv_turnout_gvm to dichotomous
+
+```{r} 
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
+```
+
