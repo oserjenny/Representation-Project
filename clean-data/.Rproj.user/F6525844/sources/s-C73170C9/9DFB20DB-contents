@@ -33,19 +33,13 @@ Take a look at the data
 head(tbl)
 ```
 
-Display frequencies of participation variable over time
+Display frequencies of validated turnout General Election over time 
 
 ```{r} 
-tbl %>% group_by (year) %>% count (voted_sen) 
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) 
 ```
 
-Display full table frequencies
-
-```{r} 
-tbl %>% group_by (year) %>% count (voted_sen) %>% View
-```
-
-Validated turnout General Election 
+Display table, frequencies of validated turnout General Election over time
 
 ```{r} 
 tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
@@ -56,6 +50,19 @@ Recode of vv_turnout_gvm to dichotomous
 ```{r} 
 tbl <- tbl %>%
   mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+```
+
+Display frequencies of recoded Validated turnout General Election over time 
+
+```{r} 
+tbl %>% group_by (year) %>% count (vv_turnout_gvm_binary) 
+```
+
+
+Display table, frequencies of recoded Validated turnout General Election over time 
+
+```{r} 
+tbl %>% group_by (year) %>% count (vv_turnout_gvm_binary) %>% View
 ```
 
 Plot turnout dichotomous by year
