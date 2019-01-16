@@ -7,15 +7,15 @@
     "folds" : "",
     "hash" : "0",
     "id" : "9DFB20DB",
-    "lastKnownWriteTime" : 1547471067,
-    "last_content_update" : 1547471067522,
+    "lastKnownWriteTime" : 1547633751,
+    "last_content_update" : 1547633751338,
     "path" : "~/GitHub/Representation-Project/clean-data/README.Rmd",
     "project_path" : "README.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "59,0",
+        "cursorPosition" : "55,9",
         "last_setup_crc32" : "",
-        "scrollLine" : "53"
+        "scrollLine" : "28"
     },
     "relative_order" : 3,
     "source_on_save" : false,
