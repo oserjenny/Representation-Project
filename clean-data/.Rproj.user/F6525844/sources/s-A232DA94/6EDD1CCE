@@ -1,23 +1,23 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1547125420796.000,
-    "dirty" : false,
+    "created" : 1548755926673.000,
+    "dirty" : true,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "0",
-    "id" : "9DFB20DB",
-    "lastKnownWriteTime" : 1547633751,
-    "last_content_update" : 1547633751338,
+    "id" : "6EDD1CCE",
+    "lastKnownWriteTime" : 1548762968,
+    "last_content_update" : 1548763040741,
     "path" : "~/GitHub/Representation-Project/clean-data/README.Rmd",
     "project_path" : "README.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "75,8",
+        "cursorPosition" : "185,0",
         "last_setup_crc32" : "",
-        "scrollLine" : "8"
+        "scrollLine" : "168"
     },
-    "relative_order" : 3,
+    "relative_order" : 2,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"

@@ -183,6 +183,11 @@ tbl %>%
   count(state) 
 ```
 
+Gender
+```{r} 
+tbl %>% 
+  count(gender) 
+```
 
 
 
