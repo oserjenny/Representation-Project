@@ -48,6 +48,7 @@ Display frequencies of validated turnout General Election over time - shows only
 ```{r} 
 tbl %>% 
   group_by (year) %>% 
+  
   count (vv_turnout_gvm) 
 ```
 
