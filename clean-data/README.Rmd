@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(readr)
 library(tidyverse)
+library(knitr)
 ```
 
 ## Introduction
@@ -36,38 +37,26 @@ Look at all variable names in file
 names(tbl)
 ```
 
-Select variables (example from Kuriwaki Guide)
-```{r}
-tbl %>%
-  select(year, case_id, pid3)
-```
-
-Note from Kuriwaki guide (p.3) - A labelled variable's labels are not shown immediately in the console, as is clear from output of previous chunk. But labels can be displayed by transforming the labelled vector into a factor.
-
-library(haven)
-select(tbl, year, case_id, pid3) %>% 
-  mutate(pid3_fct = as_factor(pid3))
-
-Select variables (example from Kuriwaki Guide)
+Select variables (from Kuriwaki Guide)
 ```{r}
 tbl %>%
   select(year, case_id, pid3)
 ```
 
 
-Display frequencies of validated turnout General Election over time 
+Display frequencies of validated turnout General Election over time - shows only first few rows in console
 ```{r} 
 tbl %>% 
   group_by (year) %>% 
   count (vv_turnout_gvm) 
 ```
 
-Display table - frequencies of validated turnout General Election over time
-```{r, eval=FALSE} 
+Display frequencies of validated turnout General Election over time - shows all rows in console
+```{r} 
 tbl %>% 
   group_by (year) %>% 
   count (vv_turnout_gvm) %>% 
-  View
+  as.data.frame
 ```
 
 Recode of vv_turnout_gvm to dichotomous
@@ -84,55 +73,13 @@ tbl %>%
 ```
 
 Display table, frequencies of recoded Validated turnout General Election over time 
-```{r,eval=FALSE} 
+```{r} 
 tbl %>% 
   group_by (year) %>% 
   count (vv_turnout_gvm_binary) %>% 
-  View
+  kable(align=c("l","c","c"))
 ```
 
-Plot turnout dichotomous by year
-```{r} 
-ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
-
-```
-
-...Didn't work - began drafting revised code w JA
-```{r} 
-ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary)) geom_bar
-
-```
-
-JO attempted new coding based on Grolemund & Wickham - nope
-```{r} 
-ggplot(data = tbl)
- geom_point(mapping = aes(x=year,y=vv_turnout_gvm_binary))
-```
-
-
-JO attempted new coding based on Grolemund & Wickham - nope
-```{r} 
-ggplot(tbl, geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary)))
-```
-
-JO attempted new coding based on Grolemund & Wickham - nope
-```{r} 
-ggplot(data = tbl, mapping = aes(x=year, y=vv_turnout_gvm_binary)) 
-geom_point()
-```
-
-JO attempted new coding based on Grolemund & Wickham - nope
-```{r} 
-ggplot(tbl, aes(x=year, y=vv_turnout_gvm_binary)) 
-geom_point
-```
-
-JO attempted new coding based on Grolemund & Wickham - nope
-```{r} 
-ggplot(tbl)
-geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary))
-
-```
 
 JO exploring additional vars in dataset
 Year
@@ -183,8 +130,75 @@ tbl %>%
   count(state) 
 ```
 
+Gender
+```{r} 
+tbl %>% 
+  count(gender) 
+```
+
+Age
+```{r} 
+tbl %>% 
+  count(age) 
+```
+
+ggplot attempts
+Plot turnout dichotomous by year
+```{r} 
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+
+```
+
+Revising attempt w JA 29Jan version 1
+```{r} 
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))+
+  geom_bar(aes(y=..count..))
+
+```
+
+Revising attempt w JA 29Jan version 2
+```{r} 
+tbl %>% 
+  group_by(year) %>% 
+  summarise(Proportion=mean(vv_turnout_gvm_binary,na.omit=TRUE)) %>% 
+  filter(!is.na(Proportion)) %>% 
+  ggplot(aes(x=as.factor(year),y=Proportion))+
+  geom_bar(stat="identity") +
+  labs(x="Year")
+
+```
 
 
+JO attempted new coding based on Grolemund & Wickham - nope
+```{r} 
+ggplot(data = tbl)
+ geom_point(mapping = aes(x=year,y=vv_turnout_gvm_binary))
+```
+
+
+JO attempted new coding based on Grolemund & Wickham - nope
+```{r} 
+ggplot(tbl, geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary)))
+```
+
+JO attempted new coding based on Grolemund & Wickham - nope
+```{r} 
+ggplot(data = tbl, mapping = aes(x=year, y=vv_turnout_gvm_binary)) 
+geom_point()
+```
+
+JO attempted new coding based on Grolemund & Wickham - nope
+```{r} 
+ggplot(tbl, aes(x=year, y=vv_turnout_gvm_binary)) 
+geom_point
+```
+
+JO attempted new coding based on Grolemund & Wickham - nope
+```{r} 
+ggplot(tbl)
+geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary))
+
+```
 
 
 

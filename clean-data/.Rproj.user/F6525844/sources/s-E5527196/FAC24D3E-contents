@@ -1,0 +1,314 @@
+library(readr)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+head(tbl)
+library(tidyverse)
+tbl %>% group_by (year) %>% count (voted_sen)
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
+tbl %>% group_by (year) %>% count (voted_sen)
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
+tbl %>% group_by (year) %>% count (voted_sen)
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+df <- readRDS("cumulative_2006_2017.Rds")
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+df <- readRDS("cumulative_2006_2017.Rds"
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+df <- read_dta("cumulative_2006_2017.dta")
+select(df, year, case_id, pid3)
+library(haven)
+df <- readRDS("cumulative_2006_2017.Rds
+library(haven)
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+select (df, year, case_id, pid3)
+select(df, year, case_id, pid3)
+df <- readRDS("cumulative_2006_2017.Rds”)
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+library(haven)
+select(df, year, case_id, pid3)
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+tbl %>% group_by (year) %>% count (voted_sen)
+tbl %>% group_by (year) %>% count (voted_sen) %>% View
+tbl %>% group_by (year) %>% count (vv_turnout_gvm)
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
+tbl <- tbl %>%
+mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+tbl %>% group_by (year) %>% count (vv_turnout_gvm_binary)
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
+tbl %>% group_by (year) %>% count (vv_turnout_gvm)
+tbl %>% group_by (year) %>% count (vv_turnout_gvm) %>% View
+tbl <- tbl %>%
+mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+tbl <- tbl %>%
+mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+tbl %>% group_by (year) %>% count (vv_turnout_gvm_binary)
+tbl %>% group_by (year) %>% count (vv_turnout_gvm_binary) %>% View
+tbl %>% group_by (year) %>% count (vv_turnout_gvm_binary) %>% View
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary)) geom_bar
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+select(df, year, case_id, pid3)
+names(tbl)
+names(tbl)
+select(tbl, year, case_id, pid3)
+select(tbl, year, case_id, pid3)
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+names(tbl)
+View(tbl)
+tbl %>%
+names(tbl) %>%
+View
+names(tbl) View
+tbl %>%
+names(tbl) %.%
+View
+names(tbl)
+View(tbl)
+head(tbl)
+tbl %>%
+select(year, case_id, pid3)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm) %>%
+View
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm) %>%
+View
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm) %>%
+View
+tbl <- tbl %>%
+mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary) %>%
+View
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm) %>%
+View
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+names(tbl)
+tbl %>%
+select(year, case_id, pid3)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm) %>%
+View
+tbl <- tbl %>%
+mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary)
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary) %>%
+View
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary)) geom_bar
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(data=tbl)
+geom_bar(mapping = aes(x=year,y=vv_turnout_gvm_binary)
+ggplot(data=tbl)
+geom_bar(mapping = aes(x=year,y=vv_turnout_gvm_binary))
+# Chunk 1: setup
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+# Chunk 2
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+# Chunk 3
+head(tbl)
+# Chunk 4
+names(tbl)
+# Chunk 5
+tbl %>%
+select(year, case_id, pid3)
+# Chunk 6
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm)
+# Chunk 7
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm) %>%
+View
+# Chunk 8
+tbl <- tbl %>%
+mutate(vv_turnout_gvm_binary=as.numeric(vv_turnout_gvm=="Voted"))
+# Chunk 9
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary)
+# Chunk 10
+tbl %>%
+group_by (year) %>%
+count (vv_turnout_gvm_binary) %>%
+View
+# Chunk 11
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(data=tbl)
+geom_bar(mapping = aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(tbl, geom_bar(mapping = aes(x=year,y=vv_turnout_gvm_binary)))
+ggplot(tbl, geom_bar(mapping = aes(x=year, y=vv_turnout_gvm_binary)))
+ggplot(data=tbl)
+geom_bar(mapping = aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(data=tbl)
+geom_point(mapping = aes(x=year,y=vv_turnout_gvm_binary))
+View(tbl)
+ggplot(tbl, geom_point(mapping = aes(x=year,y=vv_turnout_gvm_binary)))
+ggplot(tbl, geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary)))
+ggplot(data=tbl)
+geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary))
+ggplot(tbl)
+geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary))
+ggplot(tbl, geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary)))
+ggplot(data = tbl)
+geom_point(mapping = aes(x=year,y=vv_turnout_gvm_binary))
+ggplot(data = tbl, mapping = aes(x=year, y=vv_turnout_gvm_binary)) geom_bar
+ggplot(data = tbl, mapping = aes(x=year, y=vv_turnout_gvm_binary))
+geom_bar()
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary)) geom_bar
+ggplot(data = tbl, mapping = aes(x=year, y=vv_turnout_gvm_binary))
+geom_point()
+ggplot(data = tbl)
+geom_point(mapping = aes(x=year,y=vv_turnout_gvm_binary)), mean
+ggplot(tbl, aes(x=year, y=vv_turnout_gvm_binary))
+geom_point(aes)
+ggplot(tbl, aes(x=year, y=vv_turnout_gvm_binary))
+geom_point
+ggplot(tbl)
+geom_bar(mapping = aes(x=year, y=vv_turnout_gvm_binary))
+ggplot(tbl)
+geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary))
+ggplot(tbl,aes(x=year,y=vv_turnout_gvm_binary)) geom_bar
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+head(tbl)
+head(tbl)
+head(tbl)
+names(tbl)
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+df
+df <- readRDS("cumulative_2006_2017.Rds")
+tbl
+tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+tbl %>%
+select(year, case_id, pid3)
+library(haven)
+select(df, year, case_id, pid3) %>%
+mutate pid3_fct = as_factor(pid3))
+library(haven)
+select(df, year, case_id, pid3) %>%
+mutate(pid3_fct = as_factor(pid3))
+library(haven)
+select(tbl, year, case_id, pid3) %>%
+mutate(pid3_fct = as_factor(pid3))
+tbl %>%
+count (year)
+tbl %>%
+count (weight)
+tbl %>%
+group_by(year)
+count (weight)
+tbl %>%
+group_by(year) %>%
+count (weight)
+tbl %>%
+group_by(year) %>%
+mean (weight)
+tbl %>%
+group_by(year) %>%
+mean(weight)
+tbl %>%
+group_by(year) %>%
+count(tookpost)
+tbl %>%
+group_by(year) %>%
+summary(weight_cumulative)
+tbl %>%
+group_by(year) %>%
+summary(weight_cumulative)
+tbl %>%
+group_by(year) %>%
+count(weight_cumulative)
+tbl %>%
+count(state)
+tbl %>%
+count(st)
+tbl %>%
+count(gender)
+tbl %>%
+count(birthyr)
+tbl %>%
+count(Age)
+tbl %>%
+count(age)
