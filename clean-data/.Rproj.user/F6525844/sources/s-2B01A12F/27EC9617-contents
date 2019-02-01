@@ -214,6 +214,22 @@ Read in 2012 cleaned data for Perspectives paper.
 tbl2012<-read_dta("../Data/CCES_foranalysis.dta")
 ```
 
+```{r}
+tbl2012 %>% group_by(st_dist,party_House1) %>% 
+  summarise_at(vars(healthcarerepeal1_House1,ryanbudget_House1,koreafreetrade_House1,simpsonbowles_House1,keystonepipeline_House1,dontaskdonttell_House1),funs(mean(.,na.rm=T)))
+
+```
+
+
+tbl2012 %>% 
+select(healthcarerepeal1_House1,ryanbudget_House1,koreafreetrade_House1,simpsonbowles_House1,keystonepipeline_House1,dontaskdonttell_House1) %>% 
+  map(class)
+
+
+tbl2012 %>% 
+select(healthcarerepeal1_House1,ryanbudget_House1,koreafreetrade_House1,simpsonbowles_House1,keystonepipeline_House1,dontaskdonttell_House1) %>% 
+head  
+
 Recoding "Don't ask don't tell" variable
 ```{r}
 tbl2012 %>% 
@@ -222,7 +238,8 @@ tbl2012 %>%
 
 JO attempt at 1st mutate - unsuccessful
 ```{r}
-mutate (dadtH1 = fct_collapse(dontaskdonttell_House1,
+tbl2012 %>% 
+  mutate (dadtH1 = fct_collapse(dontaskdonttell_House1,
     "."        = c("Did not vote", "."),
     "For"      = c("Announced For", "Yea"),
     "Against"  = c("Announced Against", "Nay"))
