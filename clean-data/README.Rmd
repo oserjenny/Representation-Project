@@ -14,13 +14,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(tidyverse)
 library(knitr)
+library(haven)
 ```
 
 ## Introduction
 
 This file documents the data cleaning for the Representation Project
 
-## Data cleaning
+## Data cleaning - Cumulative
 
 Read in the data.
 ```{r}
@@ -202,5 +203,247 @@ geom_point(mapping = aes(x=year, y=vv_turnout_gvm_binary))
 ```
 
 
+XX
+## Data cleaning - 2012, replicating Perspectives findings with focus on Independents
 
+JO dropbox link to Nov 2018 work on this topic in stata:
+CCES 2012_Russ Sage: https://www.dropbox.com/sh/fc7cn2fmaxocsyu/AADt5fFQ9jFXUQgcW65pVYvRa?dl=0
+
+Read in 2012 cleaned data for Perspectives paper.
+```{r}
+tbl2012<-read_dta("../Data/CCES_foranalysis.dta")
+```
+
+Recoding "Don't ask don't tell" variable
+```{r}
+tbl2012 %>% 
+  count(dontaskdonttell_House1)
+```
+
+JO attempt at 1st mutate - unsuccessful
+```{r}
+mutate (dadtH1 = fct_collapse(dontaskdonttell_House1,
+    "."        = c("Did not vote", "."),
+    "For"      = c("Announced For", "Yea"),
+    "Against"  = c("Announced Against", "Nay"))
+    )
+```  
+
+
+YY
+## Data cleaning - Panel 2010-2012-2014
+Read in the data.
+Link to prior panel data analyses in stata:
+CCES panel 2010-2012-2014: https://www.dropbox.com/sh/gj4vfv9xzvdgkwd/AABpmEqKQBT6EQDVCFvqeV7Ka?dl=0
+
+```{r}
+tbl_panel<-read_dta("../Data/CCES_Panel_Full3waves_VV_V4.dta")
+```
+
+I. Create joined data file
+Senate: join on state (2-letter postal abbreviation)
+In stata: Reshaped into wide format to join
+In R, relevant commands: spread, gather, mutate_at
+
+Link for CCES 2014 supplemental data:
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D1N0GO 
+
+Link for CCES 2012 supplemental data
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NI3BDE 
+
+Link for CCES 2010 supplemental data:
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KC9EQR
+
+
+Recode of relevant respondent measures
+CC10_330A = 
+Roll Call - American Recovery and Reinvestment Act
+[According to PanelGuide downloaded 1Feb2019 - https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TOE8I1]
+```{r}
+tbl_panel %>% 
+    count(CC10_330A) 
+```
+
+View 1st 5 Lines only in dataframe of all columns (vars) - added eval=FALSE to eliminate processing delay when run all code
+```{r}
+head(tbl_panel) %>% View
+```
+
+NOTE: Discrepanices between pdf "guide" and data:
+(1) "Guide" says roll call votes 2010 should all have preface CC10_332 - but in data all have preface CC10_330. 
+(2) Data says CC10_330H = Stem cell & CC10_330I = Foreign Intelligence Surveillance Act // Guide swaps them.
+
+Recode CC10_330A as factor
+```{r}
+tbl_panel <- tbl_panel %>% 
+    mutate(CC10_330A_fac=as_factor(CC10_330A))
+```
+
+Confirm successful mutate
+```{r}
+tbl_panel %>% 
+  count(CC10_330A,CC10_330A_fac)
+```
+
+Count all 2010 vars noted in pdf guide to verify they're in dataset (p.49 of guide)
+CC12_330B
+```{r}
+tbl_panel %>% count(CC10_330B)
+tbl_panel %>% count(CC10_330C)
+tbl_panel %>% count(CC10_330D)
+tbl_panel %>% count(CC10_330E)
+tbl_panel %>% count(CC10_330F)
+tbl_panel %>% count(CC10_330G)
+tbl_panel %>% count(CC10_330H)
+tbl_panel %>% count(CC10_330I)
+tbl_panel %>% count(CC10_330J)
+
+```
+
+
+Recode all remaining 2010 vars as factor
+```{r}
+tbl_panel <- tbl_panel %>% 
+    mutate(CC10_330A_fac=as_factor(CC10_330A)) %>%
+    mutate(CC10_330B_fac=as_factor(CC10_330B)) %>%
+    mutate(CC10_330C_fac=as_factor(CC10_330C)) %>%
+    mutate(CC10_330D_fac=as_factor(CC10_330D)) %>%
+    mutate(CC10_330E_fac=as_factor(CC10_330E)) %>%
+    mutate(CC10_330F_fac=as_factor(CC10_330F)) %>%
+    mutate(CC10_330G_fac=as_factor(CC10_330G)) %>%
+    mutate(CC10_330H_fac=as_factor(CC10_330H)) %>%
+    mutate(CC10_330I_fac=as_factor(CC10_330I)) %>%
+    mutate(CC10_330J_fac=as_factor(CC10_330J)) 
+```
+
+
+Confirm that mutate performed correctly
+```{r}
+tbl_panel %>% count(CC10_330B,CC10_330B_fac)
+tbl_panel %>% count(CC10_330C,CC10_330C_fac)
+tbl_panel %>% count(CC10_330D,CC10_330D_fac)
+tbl_panel %>% count(CC10_330E,CC10_330E_fac)
+tbl_panel %>% count(CC10_330F,CC10_330F_fac)
+tbl_panel %>% count(CC10_330G,CC10_330G_fac)
+tbl_panel %>% count(CC10_330H,CC10_330H_fac)
+tbl_panel %>% count(CC10_330I,CC10_330I_fac)
+tbl_panel %>% count(CC10_330J,CC10_330J_fac)
+```
+
+
+JO checking 2012 roll call opinion votes
+
+Guide includes var "House Supported Roll Call - Repeal Affordable Care Act"
+JA insight re: whether this is already merged House votes?
+```{r}
+tbl_panel %>% count(CC12_333_a_1)
+```
+
+Count all 2012 vars noted in pdf guide to verify they're in dataset (p. 143 of guide)
+```{r}
+tbl_panel %>% count(CC12_330A)
+tbl_panel %>% count(CC12_330B)
+tbl_panel %>% count(CC12_330C)
+tbl_panel %>% count(CC12_330D)
+tbl_panel %>% count(CC12_330E)
+tbl_panel %>% count(CC12_330F)
+tbl_panel %>% count(CC12_330G)
+tbl_panel %>% count(CC12_330H)
+tbl_panel %>% count(CC12_332A)
+tbl_panel %>% count(CC12_332B)
+tbl_panel %>% count(CC12_332C)
+tbl_panel %>% count(CC12_332D)
+tbl_panel %>% count(CC12_332E)
+tbl_panel %>% count(CC12_332F)
+tbl_panel %>% count(CC12_332G)
+tbl_panel %>% count(CC12_332H)
+```
+
+JO note: the final 2 vars in the list in the guidebook don't appear in the data:
+CC12_332G = Repeal ACA
+CC12_332H = Keystone 
+
+
+Recode all 2012 roll call votes as factors
+```{r}
+tbl_panel <- tbl_panel %>% 
+  mutate(CC12_330A_fac=as_factor(CC12_330A)) %>% 
+  mutate(CC12_330B_fac=as_factor(CC12_330B)) %>%
+  mutate(CC12_330C_fac=as_factor(CC12_330C)) %>% 
+  mutate(CC12_330D_fac=as_factor(CC12_330D)) %>% 
+  mutate(CC12_330E_fac=as_factor(CC12_330E)) %>% 
+  mutate(CC12_330F_fac=as_factor(CC12_330F)) %>% 
+  mutate(CC12_330G_fac=as_factor(CC12_330G)) %>% 
+  mutate(CC12_330H_fac=as_factor(CC12_330H)) %>% 
+  mutate(CC12_332A_fac=as_factor(CC12_332A)) %>% 
+  mutate(CC12_332B_fac=as_factor(CC12_332B)) %>% 
+  mutate(CC12_332C_fac=as_factor(CC12_332C)) %>% 
+  mutate(CC12_332D_fac=as_factor(CC12_332D)) %>% 
+  mutate(CC12_332E_fac=as_factor(CC12_332E)) %>% 
+  mutate(CC12_332F_fac=as_factor(CC12_332F))
+```
+
+Confirm that mutate performed correctly
+```{r}
+tbl_panel %>% count(CC12_330A,CC12_330A_fac)
+tbl_panel %>% count(CC12_330B,CC12_330B_fac)
+tbl_panel %>% count(CC12_330C,CC12_330C_fac)
+tbl_panel %>% count(CC12_330D,CC12_330D_fac)
+tbl_panel %>% count(CC12_330E,CC12_330E_fac)
+tbl_panel %>% count(CC12_330F,CC12_330F_fac)
+tbl_panel %>% count(CC12_330G,CC12_330G_fac)
+tbl_panel %>% count(CC12_330H,CC12_330H_fac)
+tbl_panel %>% count(CC12_332A,CC12_332A_fac)
+tbl_panel %>% count(CC12_332B,CC12_332B_fac)
+tbl_panel %>% count(CC12_332C,CC12_332C_fac)
+tbl_panel %>% count(CC12_332D,CC12_332D_fac)
+tbl_panel %>% count(CC12_332E,CC12_332E_fac)
+tbl_panel %>% count(CC12_332F,CC12_332F_fac)
+```
+
+Count all 2014 vars noted in pdf guide to verify they're in dataset (p. 269ff of guide)
+```{r}
+tbl_panel %>% count(CC14_330A)
+tbl_panel %>% count(CC14_330B)
+tbl_panel %>% count(CC14_330C)
+tbl_panel %>% count(CC14_330D)
+tbl_panel %>% count(CC14_330E)
+tbl_panel %>% count(CC14_330F)
+tbl_panel %>% count(CC14_330G)
+tbl_panel %>% count(CC14_330H)
+tbl_panel %>% count(CC14_332A)
+tbl_panel %>% count(CC14_332B)
+tbl_panel %>% count(CC14_332C)
+tbl_panel %>% count(CC14_332D)
+tbl_panel %>% count(CC14_332E)
+tbl_panel %>% count(CC14_332F)
+```
+
+ZZZ
+JO finished roll call recoding here - restart next 2 chunks to adapt to CC14
+Recode all 2012 roll call votes as factors
+```{r}
+tbl_panel <- tbl_panel %>% 
+  mutate(CC12_330A_fac=as_factor(CC12_330A)) %>% 
+  mutate(CC12_330B_fac=as_factor(CC12_330B)) %>%
+  ZZZ
+  mutate(CC12_332F_fac=as_factor(CC12_332F))
+```
+Confirm that mutate performed correctly
+```{r}
+tbl_panel %>% count(CC12_330A,CC12_330A_fac)
+ZZZ
+```
+
+XXXXXXXXXXXXXXX
+Next step: recode socio-dem data - code below is a start
+```{r}
+tbl_panel %>% 
+select(gender_10,birthyr_10) %>% 
+  mutate(gender=as_factor(gender_10),
+  age=2010-birthyr_10)
+```
+
+Following vars used in stata:
+codebook V101 V103 cdid cdid113 countyfips
 

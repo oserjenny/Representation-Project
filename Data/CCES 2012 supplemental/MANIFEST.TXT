@@ -1,0 +1,7 @@
+2012RollCalls.dta (application/x-stata) 65002 bytes.
+2012_Race_Codebook.pdf (application/pdf) 115375 bytes.
+2012_RollCallVotes_Codebook.pdf (application/pdf) 108571 bytes.
+Cuevas_2012-House-Candidates-by-Race.dta (application/x-stata-13) 14359 bytes.
+Merge_CCES2012_with_RaceData.do (application/x-stata-syntax) 495 bytes.
+page_timing_data.dta (application/x-stata) 29804882 bytes.
+timingguide.pdf (application/pdf) 82075 bytes.

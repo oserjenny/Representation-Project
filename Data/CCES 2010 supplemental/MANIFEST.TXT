@@ -1,0 +1,3 @@
+2010_Race_Codebook.pdf (application/pdf) 115005 bytes.
+Cuevas_2010-House-Candidates-by-Race.dta (application/x-stata-13) 14159 bytes.
+Merge_CCES2010_with_RaceData.do (application/x-stata-syntax) 482 bytes.

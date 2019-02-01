@@ -1,0 +1,7 @@
+2014RollCalls.dta (application/x-stata) 25646 bytes.
+2014_Race_Codebook.pdf (application/pdf) 117272 bytes.
+2014_RollCallVotes_Codebook.pdf (application/pdf) 104563 bytes.
+Cuevas_2014-House-Candidates-by-Race.dta (application/x-stata-13) 13724 bytes.
+Merge_CCES2014_with_RaceData.do (application/x-stata-syntax) 500 bytes.
+page_timing_data.dta (application/x-stata) 32399972 bytes.
+timingguide.pdf (application/pdf) 82075 bytes.
