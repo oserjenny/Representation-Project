@@ -3,8 +3,8 @@ title: "Data cleaning"
 author: "Jenny"
 date: "January 2019"
 output:
-  github_document
-editor_options: 
+  pdf_document: default
+editor_options:
   chunk_output_type: console
 ---
 
