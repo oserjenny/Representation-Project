@@ -318,6 +318,7 @@ CCES panel 2010-2012-2014: https://www.dropbox.com/sh/gj4vfv9xzvdgkwd/AABpmEqKQB
 Read in the data.
 
 ```{r}
+
 tbl_panel <- haven::read_dta("../Data/CCES_Panel_Full3waves_VV_V4.dta", encoding = "latin1")
 ```
 
@@ -342,20 +343,28 @@ CC10_330A =
 Roll Call - American Recovery and Reinvestment Act
 [According to PanelGuide downloaded 1Feb2019 - https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TOE8I1]
 ```{r}
+
 tbl_panel %>% 
   count(CC10_330A) 
 ```
 
-View 1st 5 Lines only in dataframe of all columns (vars)
+See head of dataset in in console
 ```{r}
+
 head(tbl_panel)
 ```
 
-NOTE: Discrepanices between pdf "guide" and data:
+View 1st 6 rows of data for all vars as dataset
+```{r, eval=FALSE}
+
+head(tbl_panel) %>% View
+```
+
+NOTE: Discrepancies between pdf "guide" and data:
 (1) "Guide" says roll call votes 2010 should all have preface CC10_332 - but in data all have preface CC10_330. 
 (2) Data says CC10_330H = Stem cell & CC10_330I = Foreign Intelligence Surveillance Act // Guide swaps them.
 
-Recode CC10_330A as factor.  This converts the labeled numeric column in to a factor with strings as the values.
+Recode CC10_330A as factor - converts the labeled numeric column into a factor with strings as the values.
 
 ```{r}
 
@@ -368,7 +377,6 @@ tbl_panel %>%
 ```
 
 Count all 2010 vars noted in pdf guide to verify they're in dataset (p.49 of guide)
-CC12_330B
 ```{r}
 
 CC10_330_vars <- tbl_panel %>% 
@@ -401,15 +409,7 @@ map2(CC10_330_vars, fac_vars, ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
 
 
-JO checking 2012 roll call opinion votes
-
-Guide includes var "House Supported Roll Call - Repeal Affordable Care Act"
-JA insight re: whether this is already merged House votes?
-```{r}
-tbl_panel %>% count(CC12_333_a_1)
-```
-
-Count all 2012 vars noted in pdf guide to verify they're in dataset (p. 143 of guide)
+2012: Count all 2012 vars noted in pdf guide to verify they're in dataset (p. 143 of guide)
 ```{r}
 
 CC12_vars <- tbl_panel %>% 
