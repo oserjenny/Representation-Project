@@ -422,6 +422,8 @@ CC12_vars %>%
   map(~ tbl_panel %>% count(!!sym(.x)))
 ```
 
+YY
+
 JO note: the final 2 vars in the list in the guidebook don't appear in the data:
 CC12_332G = Repeal ACA
 CC12_332H = Keystone 
