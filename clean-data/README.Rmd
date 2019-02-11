@@ -312,35 +312,25 @@ tbl2012_vars %>%
 
 ## Data cleaning - Panel 2010-2012-2014
 
-Link to prior panel data analyses in stata:
+Panel data and Guide downloaded 1Feb2019: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TOE8I1]
+
+As reminder of prior work, link to prior panel data analyses in stata:
 CCES panel 2010-2012-2014: https://www.dropbox.com/sh/gj4vfv9xzvdgkwd/AABpmEqKQBT6EQDVCFvqeV7Ka?dl=0
 
-Read in the data.
 
+
+I. Cleaning respondent data
+
+Read in the data.
 ```{r}
 
 tbl_panel <- haven::read_dta("../Data/CCES_Panel_Full3waves_VV_V4.dta", encoding = "latin1")
 ```
 
 
-I. Create joined data file (respondents & roll call votes)
-In stata: Reshaped into wide format to join
-In R, relevant commands: spread, gather, mutate_at
-
-Link for CCES 2014 supplemental data:
-https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D1N0GO 
-
-Link for CCES 2012 supplemental data
-https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NI3BDE 
-
-Link for CCES 2010 supplemental data:
-https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KC9EQR
-
-
 Recode of relevant respondent measures
-CC10_330A = 
-Roll Call - American Recovery and Reinvestment Act
-[According to PanelGuide downloaded 1Feb2019 - https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TOE8I1]
+Begin with 1 indicator as example:
+CC10_330A = Roll Call, American Recovery and Reinvestment Act
 ```{r}
 
 tbl_panel %>% 
@@ -354,17 +344,13 @@ head(tbl_panel)
 ```
 
 View 1st 6 rows of data for all vars as dataset
+JO NOTE: I'm aware this command causes problems with Rmarkdown, but I'm retaining it during this preliminary data cleaning phase because it is important to view the stata meta-data that describe each variable but does not get reported in R (see e.g. 3rd column "CC10_301_1" is labeled underneath the variable name "Media use - Blog 2010"). This information is important to reference during data cleaning for this dataset because the pdf Guide does not always correctly document the variables that are actually in the data.
 ```{r, eval=FALSE}
 
 head(tbl_panel) %>% View
 ```
 
-NOTE: Discrepancies between pdf "guide" and data:
-(1) "Guide" says roll call votes 2010 should all have preface CC10_332 - but in data all have preface CC10_330. 
-(2) Data says CC10_330H = Stem cell & CC10_330I = Foreign Intelligence Surveillance Act // Guide swaps them.
-
 Recode CC10_330A as factor - converts the labeled numeric column into a factor with strings as the values.
-
 ```{r}
 
 tbl_panel <- tbl_panel %>% 
@@ -375,7 +361,7 @@ tbl_panel %>%
   count(CC10_330A, CC10_330A_fac)
 ```
 
-Count all 2010 vars noted in pdf guide to verify they're in dataset (p.49 of guide)
+Count all 2010 vars noted in pdf Guide to verify they're in dataset (p.49 of Guide)
 ```{r}
 
 CC10_330_vars <- tbl_panel %>% 
@@ -408,7 +394,7 @@ map2(CC10_330_vars, fac_vars, ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
 
 
-2012: Count all 2012 vars noted in pdf guide to verify they're in dataset (p. 143 of guide)
+2012: Count all 2012 vars noted in pdf Guide to verify they're in dataset (p. 143 of Guide)
 ```{r}
 
 CC12_vars <- tbl_panel %>% 
@@ -421,7 +407,7 @@ CC12_vars %>%
   map(~ tbl_panel %>% count(!!sym(.x)))
 ```
 
-JO note: the final 2 vars in the list in the guidebook don't appear in the data:
+Note: the final 2 vars in the list in the Guide don't appear in the data:
 CC12_332G = Repeal ACA
 CC12_332H = Keystone 
 
@@ -442,7 +428,7 @@ CC12_fac_vars <- CC12_vars %>%
 map2(CC12_vars, CC12_fac_vars, ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
 
-Count all 2014 vars noted in pdf guide to verify they're in dataset (p. 269ff of guide)
+Count all 2014 vars noted in pdf Guide to verify they're in dataset (p. 269ff of Guide)
 ```{r}
 
 CC14_vars <- tbl_panel %>% 
@@ -474,14 +460,170 @@ map2(CC14_vars, CC14_fac_vars, ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
 
 
-## Merge available coded roll call votes
-NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
 
-2012 relevant folder in github: "CCES 2012 supplemental"
+## Recode Participation 
 
+Voting vars recode
+JO note: reference prior code ("count all 2010 vars..."") to create more parsimonious code; for now, do one at a time.
+
+Validated vote variables, general election:
+2010, 2012, 2014
+
+2010 count
+```{r}
+tbl_panel %>% 
+  count(VV_general_10) 
+  
+```
+
+2010 recode as factor
+```{r}
+
+tbl_panel <- tbl_panel %>% 
+  mutate(VV_general_10_fac = as_factor(VV_general_10)) 
+
+# check successful mutate
+tbl_panel %>% 
+  count(VV_general_10, VV_general_10_fac)
+```
+
+
+HELP: 
+2010 recode as binary
+JO trying to adapt ICCS code - but this code was for the factor version of variable, but seems cleaner code to use the original numeric categories.
+```{r}
+
+tbl_panel <- tbl_panel %>% 
+  mutate(VV_general_10_bin = fct_collapse(VV_general_10,
+  "vote"     = c(1, 2, 3, 4, 5),
+  "not vote" = c(6)
+  "NA"       = c(9)
+              
+```
+
+
+2012 count
+```{r}
+
+tbl_panel %>% 
+  count(VV_general_12)
+
+```
+
+2012 recode as factor
+```{r}
+
+tbl_panel <- tbl_panel %>% 
+  mutate(VV_general_12_fac = as_factor(VV_general_12)) 
+
+# check successful mutate
+tbl_panel %>% 
+  count(VV_general_12, VV_general_12_fac)
+```
+
+
+2014 count
+```{r}
+
+tbl_panel %>% 
+  count(VV_general_14) 
+  
+```
+
+
+2014 recode as factor
+```{r}
+
+tbl_panel <- tbl_panel %>% 
+  mutate(VV_general_14_fac = as_factor(VV_general_14)) 
+
+# check successful mutate
+tbl_panel %>% 
+  count(VV_general_14, VV_general_14_fac)
+```
+
+
+NOW CODING POL PARTIC IN ADDITION TO VOTING:
+
+1ST: Attend meetings
+
+Political activity: Attend meetings 2010
+During the past year did you...Attend local political meetings (such as school board or city council)
+
+2010 count
+```{r}
+
+tbl_panel %>% 
+  count(CC10_417a_1) 
+```
+
+2010 recode as factor
+```{r}
+
+tbl_panel <- tbl_panel %>% 
+  mutate(CC10_417a_1_fac = as_factor(CC10_417a_1)) 
+
+# check successful mutate
+tbl_panel %>% 
+  count(CC10_417a_1, CC10_417a_1_fac)
+```
+HELP: JO question, does the output mean there are no missing values here? Or are they just not displayed? Same question for all vars in this series.
+
+
+
+2012 count
+```{r}
+
+tbl_panel %>% 
+  count(CC12_417a_1) 
+```
+
+
+2012 recode as factor
+```{r}
+
+tbl_panel <- tbl_panel %>% 
+  mutate(CC12_417a_1_fac = as_factor(CC12_417a_1)) 
+
+# check successful mutate
+tbl_panel %>% 
+  count(CC10_417a_1, CC10_417a_1_fac)
+```
+
+HELP REQUESTS TO COMPLETE THIS CODING: 
+**Complete recoding of "attend meeting"variables for all three years, and display as figures (bar chart or line chart, whatever you think displays best) similar to "vote" above:
+CC10_417a_1
+CC12_417a_1
+CC14_417a_1
+
+**Do similar var recodes and figure display
+for: 
+
+"Political sign" 
+During the past year did you...Put up a political sign (such as a lawn sign or bumper sticker)?
+CC10_417a_2
+CC12_417a_2
+CC14_417a_2
+
+
+"Work for campaign"
+During the past year did you...Work for a candidate or campaign?
+CC10_417a_3
+CC12_417a_3
+CC14_417a_3
+
+"Donate money""
+During the past year did you...Donate money to a candidate, campaign, or political organization?
+CC10_417a_4
+CC12_417a_4
+CC14_417a_4 
+
+
+
+
+XXX
 ## Recode Socio-Dem Data
-
-Next step: recode socio-dem data - code below is a start
+Socio-dem data - code below is a start
 ```{r}
 
 tbl_panel %>% 
@@ -490,6 +632,28 @@ tbl_panel %>%
          age    = 2010 - birthyr_10)
 ```
 
-Following vars used in stata:
-codebook V101 V103 cdid cdid113 countyfips
+
+
+
+XXX
+## Merge available coded roll call votes
+NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
+
+2012 relevant folder in github: "CCES 2012 supplemental"
+
+
+II. Create joined data file (respondents & roll call votes)
+In stata: Reshaped into wide format to join
+In R, relevant commands: spread, gather, mutate_at
+
+Link for CCES 2010 supplemental data:
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KC9EQR
+
+Link for CCES 2012 supplemental data
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NI3BDE 
+
+Link for CCES 2014 supplemental data:
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D1N0GO 
+
+
 
