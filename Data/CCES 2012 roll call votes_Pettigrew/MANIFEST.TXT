@@ -1,0 +1,3 @@
+house_votes_112cong_2012cces.dta (application/x-stata) 59176 bytes.
+Roll Call Votes - 112th Congress - 2012 CCES.docx (application/vnd.openxmlformats-officedocument.wordprocessingml.document) 25061 bytes.
+senate_votes_112cong_2012cces.dta (application/x-stata) 15103 bytes.

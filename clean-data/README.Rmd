@@ -323,8 +323,7 @@ tbl_panel <- haven::read_dta("../Data/CCES_Panel_Full3waves_VV_V4.dta", encoding
 ```
 
 
-I. Create joined data file
-Senate: join on state (2-letter postal abbreviation)
+I. Create joined data file (respondents & roll call votes)
 In stata: Reshaped into wide format to join
 In R, relevant commands: spread, gather, mutate_at
 
@@ -422,8 +421,6 @@ CC12_vars %>%
   map(~ tbl_panel %>% count(!!sym(.x)))
 ```
 
-YY
-
 JO note: the final 2 vars in the list in the guidebook don't appear in the data:
 CC12_332G = Repeal ACA
 CC12_332H = Keystone 
@@ -459,15 +456,15 @@ CC14_vars %>%
 ```
 
 
-JO finished roll call recoding here - restart next 2 chunks to adapt to CC14
-Recode all 2012 roll call votes as factors
+
+Recode all 2014 roll call votes as factors
 ```{r}
-  
+
 tbl_panel <- tbl_panel %>% 
   mutate_at(vars(CC14_330A, CC14_330B, CC14_330C, CC14_330D, CC14_330E,
                  CC14_330F, CC14_330G, CC14_330H, CC14_332A, CC14_332B,
                  CC14_332C, CC14_332D, CC14_332E, CC14_332F), 
-            funs(fac = as_factor(.)))  
+            funs(fac = as_factor(.)))
 
 # Confirm that mutate performed correctly
 CC14_fac_vars <- CC14_vars %>% 
@@ -475,6 +472,12 @@ CC14_fac_vars <- CC14_vars %>%
 
 map2(CC14_vars, CC14_fac_vars, ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
+
+
+## Merge available coded roll call votes
+NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
+
+2012 relevant folder in github: "CCES 2012 supplemental"
 
 ## Recode Socio-Dem Data
 

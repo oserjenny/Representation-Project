@@ -1,0 +1,2 @@
+CCES09_CMN_CODEBOOK.pdf (application/pdf) 138369 bytes.
+cces09_cmn_output_2.dta (application/x-stata) 24535806 bytes.

@@ -1,0 +1,9 @@
+CCES 2008 Guide v4.doc (application/msword) 834048 bytes.
+CCES Election File (House and Senate Notes).csv (text/plain; charset=US-ASCII) 247 bytes.
+CCES Election File (House and Senate).csv (text/plain; charset=US-ASCII) 35769 bytes.
+cces_2008_common.dta (application/x-stata) 200310225 bytes.
+House Roll Call.csv (text/plain; charset=US-ASCII) 38185 bytes.
+Prez by State.csv (text/plain; charset=US-ASCII) 1383 bytes.
+Senator 1 Roll Call.csv (text/plain; charset=US-ASCII) 5758 bytes.
+Senator 2 Roll Call.csv (text/plain; charset=US-ASCII) 5560 bytes.
+state legislature party seats.xls (application/vnd.ms-excel) 22528 bytes.

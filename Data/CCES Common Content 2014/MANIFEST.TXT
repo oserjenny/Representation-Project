@@ -1,0 +1,5 @@
+CCES14_Common_Content_Validated.dta (application/x-stata) 435342078 bytes.
+CCES14_Common_formatted.pdf (application/pdf) 2009825 bytes.
+CCES14_Common_post_formatted.pdf (application/pdf) 1304010 bytes.
+Guide to the 2014 CCES Common Content (application/pdf) 486343 bytes.
+vote-validation-guide-2014.pdf (application/pdf) 248189 bytes.

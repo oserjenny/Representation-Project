@@ -1,0 +1,3 @@
+cces_2006_common.dta (application/x-stata) 143937156 bytes.
+CCES_2006_Guide.doc (application/msword) 503296 bytes.
+CCES_2006_Literature.doc (application/msword) 43008 bytes.
