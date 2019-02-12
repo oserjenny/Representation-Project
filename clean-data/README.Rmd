@@ -620,6 +620,32 @@ CC14_417a_4
 
 
 
+## Merge available coded roll call votes
+NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
+
+2012 relevant folder in github: "CCES 2012 supplemental"
+
+
+II. Create joined data file (respondents & roll call votes)
+In stata: Reshaped into wide format to join
+In R, relevant commands: spread, gather, mutate_at
+
+Can reference prior stata work for joining procedure using stata:
+CCES panel 2010-2012-2014: https://www.dropbox.com/sh/gj4vfv9xzvdgkwd/AABpmEqKQBT6EQDVCFvqeV7Ka?dl=0
+
+**NOTE: for 2012, CCES has two versions of roll call vote data, and I can't tell which one is the correct to use for merge:
+
+1st: This is version we used in prior 2012 stata work, and this is the one referenced by Brian Schaffner in correspondence re: available roll call data. JA did significant recodes to get it to work. In github, this documentation is in folder "CCES 2010 supplemental"
+Cuevas-Molina, Ivelisse; Schaffner, Brian, 2015, "CCES 2014 Supplemental Data", https://doi.org/10.7910/DVN/D1N0GO, Harvard Dataverse, V3, UNF:6:M0Py+4hUexjh8WSlUevvDQ== [fileUNF]
+
+2nd: I came across this next source randomly - it has an earlier publication date, so I wonder if there is a reason why they have two separate codings available, and why we used the 1st version in our prior work, and not this one. In github it's in the folder "CCES 2012 roll call votes_Pettigrew"
+Pettigrew, Stephen, 2013, "Roll Call Votes - 112th Congress- 2012 CCES", https://hdl.handle.net/1902.1/20540, Harvard Dataverse, V3
+
+
+Link for CCES 2014 supplemental data:
+https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D1N0GO 
+
+
 
 XXX
 ## Recode Socio-Dem Data
@@ -631,29 +657,6 @@ tbl_panel %>%
   mutate(gender = as_factor(gender_10),
          age    = 2010 - birthyr_10)
 ```
-
-
-
-
-XXX
-## Merge available coded roll call votes
-NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
-
-2012 relevant folder in github: "CCES 2012 supplemental"
-
-
-II. Create joined data file (respondents & roll call votes)
-In stata: Reshaped into wide format to join
-In R, relevant commands: spread, gather, mutate_at
-
-Link for CCES 2010 supplemental data:
-https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KC9EQR
-
-Link for CCES 2012 supplemental data
-https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NI3BDE 
-
-Link for CCES 2014 supplemental data:
-https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D1N0GO 
 
 
 
