@@ -618,7 +618,7 @@ CC10_417a_4
 CC12_417a_4
 CC14_417a_4 
 
-
+XXEnd of participation recode
 
 ## Merge available coded roll call votes
 NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
