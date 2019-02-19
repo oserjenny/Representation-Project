@@ -25,7 +25,7 @@ This file documents the data cleaning for the Representation Project
 
 Read in the data.
 ```{r}
-tbl<-read_rds("../Data/cumulative_2006_2017.Rds")
+tbl <- read_rds("../Data/cumulative_2006_2017.Rds")
 ```
 
 Take a look at the data
@@ -317,8 +317,6 @@ Panel data and Guide downloaded 1Feb2019: https://dataverse.harvard.edu/dataset.
 As reminder of prior work, link to prior panel data analyses in stata:
 CCES panel 2010-2012-2014: https://www.dropbox.com/sh/gj4vfv9xzvdgkwd/AABpmEqKQBT6EQDVCFvqeV7Ka?dl=0
 
-
-
 I. Cleaning respondent data
 
 Read in the data.
@@ -441,8 +439,6 @@ CC14_vars %>%
   map(~ tbl_panel %>% count(!!sym(.x)))
 ```
 
-
-
 Recode all 2014 roll call votes as factors
 ```{r}
 
@@ -460,165 +456,287 @@ map2(CC14_vars, CC14_fac_vars, ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
 
 
+## Recode Voting Participation 
 
-## Recode Participation 
+Validated vote variables, general election: `VV_general_10`, `VV_general_12`, `VV_general_14`
 
-Voting vars recode
-JO note: reference prior code ("count all 2010 vars..."") to create more parsimonious code; for now, do one at a time.
+Recode as factor and binary variables .
 
-Validated vote variables, general election:
-2010, 2012, 2014
-
-2010 count
 ```{r}
-tbl_panel %>% 
-  count(VV_general_10) 
-  
-```
 
-2010 recode as factor
-```{r}
+voting_vars <- c("VV_general_10", "VV_general_12", "VV_general_14")
 
 tbl_panel <- tbl_panel %>% 
-  mutate(VV_general_10_fac = as_factor(VV_general_10)) 
+  mutate_at(voting_vars, funs(fac = as_factor(.))) %>% 
+  mutate_at(voting_vars, funs(bin = case_when(
+    . %in% c(1, 2, 3, 4, 5) ~ "vote",
+    . == 6                  ~ "not vote",
+    . == 9                  ~ NA_character_
+  )))
 
-# check successful mutate
-tbl_panel %>% 
-  count(VV_general_10, VV_general_10_fac)
+# check recodes
+voting_fac_vars <- voting_vars %>% 
+  paste0("_fac")
+
+voting_bin_vars <- voting_vars %>% 
+  paste0("_bin")
+
+pmap(list(voting_bin_vars, voting_fac_vars, voting_vars),
+     ~ tbl_panel %>% count(!!sym(..1), !!sym(..2), !!sym(..3)))
 ```
 
 
-HELP: 
-2010 recode as binary
-JO trying to adapt ICCS code - but this code was for the factor version of variable, but seems cleaner code to use the original numeric categories.
-```{r}
+## Recode Political Participation
 
-tbl_panel <- tbl_panel %>% 
-  mutate(VV_general_10_bin = fct_collapse(VV_general_10,
-  "vote"     = c(1, 2, 3, 4, 5),
-  "not vote" = c(6)
-  "NA"       = c(9)
-              
-```
-
-
-2012 count
-```{r}
-
-tbl_panel %>% 
-  count(VV_general_12)
-
-```
-
-2012 recode as factor
-```{r}
-
-tbl_panel <- tbl_panel %>% 
-  mutate(VV_general_12_fac = as_factor(VV_general_12)) 
-
-# check successful mutate
-tbl_panel %>% 
-  count(VV_general_12, VV_general_12_fac)
-```
-
-
-2014 count
-```{r}
-
-tbl_panel %>% 
-  count(VV_general_14) 
-  
-```
-
-
-2014 recode as factor
-```{r}
-
-tbl_panel <- tbl_panel %>% 
-  mutate(VV_general_14_fac = as_factor(VV_general_14)) 
-
-# check successful mutate
-tbl_panel %>% 
-  count(VV_general_14, VV_general_14_fac)
-```
-
-
-NOW CODING POL PARTIC IN ADDITION TO VOTING:
-
-1ST: Attend meetings
+#### Attend meetings
 
 Political activity: Attend meetings 2010
 During the past year did you...Attend local political meetings (such as school board or city council)
 
-2010 count
+Variables: `CC10_417a_1`, `CC12_417a_1`, `CC14_417a_1`
+
+Recode all as binary factors.
+
 ```{r}
 
-tbl_panel %>% 
-  count(CC10_417a_1) 
-```
-
-2010 recode as factor
-```{r}
+attend_meeting_vars <- c("CC10_417a_1", "CC12_417a_1", "CC14_417a_1")
 
 tbl_panel <- tbl_panel %>% 
-  mutate(CC10_417a_1_fac = as_factor(CC10_417a_1)) 
+  mutate_at(attend_meeting_vars, funs(fac = as_factor(.)))
 
-# check successful mutate
-tbl_panel %>% 
-  count(CC10_417a_1, CC10_417a_1_fac)
+# Confirm that mutate performed correctly
+attend_meeting_fac_vars <- attend_meeting_vars %>% 
+  paste0("_fac")
+
+map2(attend_meeting_vars, attend_meeting_fac_vars,
+     ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
 ```
-HELP: JO question, does the output mean there are no missing values here? Or are they just not displayed? Same question for all vars in this series.
 
+Figures:
 
-
-2012 count
 ```{r}
 
-tbl_panel %>% 
-  count(CC12_417a_1) 
+attend_meeting_plot_tbl <- map2_df(attend_meeting_vars, attend_meeting_fac_vars,
+                                   ~ tbl_panel %>%
+                                     count(!!sym(.x), !!sym(.y)) %>% 
+                                     select(contains("_fac"), n) %>%
+                                     mutate(year = .x) %>%
+                                     rename(attend_meeting = .y) %>% 
+                                     select(year, attend_meeting, n)) %>% 
+  mutate(year = case_when(
+    year == "CC10_417a_1" ~ "2010",
+    year == "CC12_417a_1" ~ "2012",
+    year == "CC14_417a_1" ~ "2014"
+  )) %>% 
+  group_by(year) %>% 
+  mutate(percent = round((n / sum(n)) * 100, 1)) %>% 
+  ungroup() %>% 
+  filter(attend_meeting == "Yes")
+
+attend_meeting_plot_tbl %>% 
+  knitr::kable()
+  
+# bar chart
+attend_meeting_plot_tbl %>% 
+  ggplot(aes(x = year, y = percent, fill = year)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(y = percent + 1.5,    # nudge above top of bar
+                  label = paste0(percent, '%')),    # prettify
+              position = position_dodge(width = .9), 
+              size = 4) +
+  lims(y = c(0, 50)) +
+  labs(x     = "Year",
+       y     = "Percent",
+       title = "Percent Attending Local Political Meetings by Year") +
+  theme(legend.position = "none")
 ```
 
 
-2012 recode as factor
-```{r}
+####  Political sign 
 
-tbl_panel <- tbl_panel %>% 
-  mutate(CC12_417a_1_fac = as_factor(CC12_417a_1)) 
-
-# check successful mutate
-tbl_panel %>% 
-  count(CC10_417a_1, CC10_417a_1_fac)
-```
-
-HELP REQUESTS TO COMPLETE THIS CODING: 
-**Complete recoding of "attend meeting"variables for all three years, and display as figures (bar chart or line chart, whatever you think displays best) similar to "vote" above:
-CC10_417a_1
-CC12_417a_1
-CC14_417a_1
-
-**Do similar var recodes and figure display
-for: 
-
-"Political sign" 
 During the past year did you...Put up a political sign (such as a lawn sign or bumper sticker)?
-CC10_417a_2
-CC12_417a_2
-CC14_417a_2
 
+Variables: `CC10_417a_2`, `CC12_417a_2`, `CC14_417a_2`
 
-"Work for campaign"
+Recode all as binary factors.
+
+```{r}
+
+pol_sign_vars <- c("CC10_417a_2", "CC12_417a_2", "CC14_417a_2")
+
+tbl_panel <- tbl_panel %>% 
+  mutate_at(pol_sign_vars, funs(fac = as_factor(.)))
+
+# Confirm that mutate performed correctly
+pol_sign_fac_vars <- pol_sign_vars %>% 
+  paste0("_fac")
+
+map2(pol_sign_vars, pol_sign_fac_vars,
+     ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
+```
+
+Figure:
+
+```{r}
+
+pol_sign_plot_tbl <- map2_df(pol_sign_vars, pol_sign_fac_vars,
+                             ~ tbl_panel %>%
+                               count(!!sym(.x), !!sym(.y)) %>% 
+                               select(contains("_fac"), n) %>%
+                               mutate(year = .x) %>%
+                               rename(political_sign = .y) %>% 
+                               select(year, political_sign, n)) %>% 
+  mutate(year = case_when(
+    year == "CC10_417a_2" ~ "2010",
+    year == "CC12_417a_2" ~ "2012",
+    year == "CC14_417a_2" ~ "2014"
+  )) %>% 
+  group_by(year) %>% 
+  mutate(percent = round((n / sum(n)) * 100, 1)) %>% 
+  ungroup() %>% 
+  filter(political_sign == "Yes")
+
+pol_sign_plot_tbl %>% 
+  knitr::kable()
+  
+# bar chart
+pol_sign_plot_tbl %>% 
+  ggplot(aes(x = year, y = percent, fill = year)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(y = percent + 1.5,    # nudge above top of bar
+                  label = paste0(percent, '%')),    # prettify
+              position = position_dodge(width = .9), 
+              size = 4) +
+  lims(y = c(0, 50)) +
+  labs(x     = "Year",
+       y     = "Percent",
+       title = "Percent Who Put Up a Political Sign by Year") +
+  theme(legend.position = "none")
+```
+
+#### "Work for campaign"
+
 During the past year did you...Work for a candidate or campaign?
-CC10_417a_3
-CC12_417a_3
-CC14_417a_3
 
-"Donate money""
+Variables: `CC10_417a_3`, `CC12_417a_3`, `CC14_417a_3`
+
+Recode all as binary factors.
+
+```{r}
+
+work_campaign_vars <- c("CC10_417a_3", "CC12_417a_3", "CC14_417a_3")
+
+tbl_panel <- tbl_panel %>% 
+  mutate_at(work_campaign_vars, funs(fac = as_factor(.)))
+
+# Confirm that mutate performed correctly
+work_campaign_fac_vars <- work_campaign_vars %>% 
+  paste0("_fac")
+
+map2(work_campaign_vars, work_campaign_fac_vars,
+     ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
+```
+
+Figure:
+
+```{r}
+
+work_campaign_plot_tbl <- map2_df(work_campaign_vars, work_campaign_fac_vars,
+                                  ~ tbl_panel %>%
+                                    count(!!sym(.x), !!sym(.y)) %>% 
+                                    select(contains("_fac"), n) %>%
+                                    mutate(year = .x) %>%
+                                    rename(work_campaign = .y) %>% 
+                                    select(year, work_campaign, n)) %>% 
+  mutate(year = case_when(
+    year == "CC10_417a_3" ~ "2010",
+    year == "CC12_417a_3" ~ "2012",
+    year == "CC14_417a_3" ~ "2014"
+  )) %>% 
+  group_by(year) %>% 
+  mutate(percent = round((n / sum(n)) * 100, 1)) %>% 
+  ungroup() %>% 
+  filter(work_campaign == "Yes")
+
+work_campaign_plot_tbl %>% 
+  knitr::kable()
+  
+# bar chart
+work_campaign_plot_tbl %>% 
+  ggplot(aes(x = year, y = percent, fill = year)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(y = percent + 1.5,    # nudge above top of bar
+                  label = paste0(percent, '%')),    # prettify
+              position = position_dodge(width = .9), 
+              size = 4) +
+  lims(y = c(0, 50)) +
+  labs(x     = "Year",
+       y     = "Percent",
+       title = "Percent Who Worked for a Campaign by Year") +
+  theme(legend.position = "none")
+```
+
+
+#### "Donate money"
+
 During the past year did you...Donate money to a candidate, campaign, or political organization?
-CC10_417a_4
-CC12_417a_4
-CC14_417a_4 
 
-XXEnd of participation recode
+Variables: `CC10_417a_4`, `CC12_417a_4`, `CC14_417a_4` 
+
+```{r}
+
+donate_vars <- c("CC10_417a_4", "CC12_417a_4", "CC14_417a_4")
+
+tbl_panel <- tbl_panel %>% 
+  mutate_at(donate_vars, funs(fac = as_factor(.)))
+
+# Confirm that mutate performed correctly
+donate_fac_vars <- donate_vars %>% 
+  paste0("_fac")
+
+map2(donate_vars, donate_fac_vars,
+     ~ tbl_panel %>% count(!!sym(.x), !!sym(.y)))
+```
+
+Figure:
+
+```{r}
+
+donate_plot_tbl <- map2_df(donate_vars, donate_fac_vars,
+                           ~ tbl_panel %>%
+                             count(!!sym(.x), !!sym(.y)) %>% 
+                             select(contains("_fac"), n) %>%
+                             mutate(year = .x) %>%
+                             rename(donate_money = .y) %>% 
+                             select(year, donate_money, n)) %>% 
+  mutate(year = case_when(
+    year == "CC10_417a_4" ~ "2010",
+    year == "CC12_417a_4" ~ "2012",
+    year == "CC14_417a_4" ~ "2014"
+  )) %>% 
+  group_by(year) %>% 
+  mutate(percent = round((n / sum(n)) * 100, 1)) %>% 
+  ungroup() %>% 
+  filter(donate_money == "Yes")
+
+donate_plot_tbl %>% 
+  knitr::kable()
+  
+# bar chart
+donate_plot_tbl %>% 
+  ggplot(aes(x = year, y = percent, fill = year)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(y = percent + 1.5,    # nudge above top of bar
+                  label = paste0(percent, '%')),    # prettify
+              position = position_dodge(width = .9), 
+              size = 4) +
+  lims(y = c(0, 50)) +
+  labs(x     = "Year",
+       y     = "Percent",
+       title = "Percent Who Donated Money to a Candidate, Campaign, or Political Organization by Year") +
+  theme(legend.position = "none")
+```
+
 
 ## Merge available coded roll call votes
 NOTE: 2010 exists in CCES dataverse, but only codes Congressional candidates by race and ethnicity variables.
@@ -646,8 +764,6 @@ Link for CCES 2014 supplemental data:
 https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D1N0GO 
 
 
-
-XXX
 ## Recode Socio-Dem Data
 Socio-dem data - code below is a start
 ```{r}
@@ -657,6 +773,3 @@ tbl_panel %>%
   mutate(gender = as_factor(gender_10),
          age    = 2010 - birthyr_10)
 ```
-
-
-
