@@ -1,4 +1,0 @@
-2016-Race-Ethnicity-Codebook.pdf (application/pdf) 117746 bytes.
-2016_Roll_Call_Codebook.pdf (application/pdf) 100930 bytes.
-CC16_Candidates_By_Race.dta (application/x-stata) 63445 bytes.
-CC16_RollCalls.dta (application/x-stata) 61652 bytes.

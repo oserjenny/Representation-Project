@@ -1,3 +1,0 @@
-house_votes_110cong_2008cces.dta (application/x-stata) 164722 bytes.
-Roll Call Votes - 110th Congress - 2008 CCES.docx (application/vnd.openxmlformats-officedocument.wordprocessingml.document) 22084 bytes.
-senate_votes_110cong_2008cces.dta (application/x-stata) 17910 bytes.

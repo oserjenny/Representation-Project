@@ -1,4 +1,0 @@
-CCES12_Common_VV.dta (application/x-stata) 432710399 bytes.
-cces_guide_2012.pdf (application/pdf) 491049 bytes.
-commoncontent2012.dta (application/x-stata) 427200039 bytes.
-vote-validation-guide-2012.pdf (application/pdf) 254504 bytes.

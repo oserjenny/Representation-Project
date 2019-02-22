@@ -1,4 +1,0 @@
-CCES 2006-2012 cumulative codebook.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) 39850 bytes.
-cces_common_cumulative_4.dta (application/x-stata) 161188111 bytes.
-cces_common_cumulative_contextual.dta (application/x-stata) 229612064 bytes.
-cumulative_textquestions.tab (text/tab-separated-values)  skipped because the total size of the download bundle exceeded the limit of 1000000000 bytes.
